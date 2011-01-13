@@ -1,3 +1,7 @@
+                                                                     
+                                                                     
+                                                                     
+                                             
 @echo off
 echo #############################################################################
 echo ####                                                                     ####
@@ -24,6 +28,7 @@ set LANPARTY_INSTALL=%LANPARTY%\Install Files
 set LANPARTY_FILES=N:\Temporary Folders\LanParty
 set LANPARTY_TORRENTS=%LANPARTY_FILES%\Torrent Files
 set ZIPPY=C:\Program Files\7-Zip\7z.exe
+set STEAM=C:\Program Files (x86)\Steam
 
 
 
@@ -78,7 +83,8 @@ rem #### TODO TODO TODO TODO TODO TODO create the torrent files and make copy/ru
 echo Copying over the Torrent files
 xcopy /E /Y "%LANPARTY_TORRENTS%" "%LANPARTY_INSTALL%"
 
-
+rem After the torrents are done, we need to extract the 7z files into %STEAM%\steamapps
+rem which should restore the gcf files.
 
 
 echo #############################################################################
@@ -95,7 +101,21 @@ echo ####  to be LOGGED in to a steam account :-)                             ##
 echo ####                                                                     ####
 echo #############################################################################
 
+REM Auto logon to Steam where username is assigned based on room/computer number
+FOR /F "delims=- tokens=1,2,3" %%g IN ("%computername%") DO (CALL :PARSE2 %%g %%h %%i)
+:PARSE2
+SET _RM=%_RM:~2,3%
+IF %_RM% EQU 4 (SET /A _PCNum=%3 + 42) else (SET _PCNum=%3)
+IF %_PCNum% LSS 10 (SET /A _PCNum=%_PCNum% + 10 - 10)
 
+echo.
+echo PC Name = %computername%
+echo Location = %_RM%
+echo user = tu0100241pc%_PCNum%
+echo password = I don't know this
+SET SteamUser=tu0100241pc%_PCNum%
+SET SteamPW=3854389823
+start "%STEAM%\steam.exe" -login %SteamUser% %SteamPW% 
 
 
 rem #### Open up the folder that will contain all the torrents when downloaded....
@@ -141,6 +161,3 @@ rem "C:\Program Files\7-Zip\7z.exe" a H:\Downloads\bittorrent_settings.7z "%AppD
 
 rem Old hack to disable UAC temporarily.. fuck its broken. fucking uac, fuck fuck fuck
 rem C:\Windows\System32\cmd.exe /k %windir%\System32\reg.exe ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f
-
-
-
