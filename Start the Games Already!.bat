@@ -102,19 +102,9 @@ echo ####                                                                     ##
 echo #############################################################################
 
 REM Auto logon to Steam where username is assigned based on room/computer number
-FOR /F "delims=- tokens=1,2,3" %%g IN ("%computername%") DO (CALL :PARSE2 %%g %%h %%i)
-:PARSE2
-SET _RM=%_RM:~2,3%
-IF %_RM% EQU 4 (SET /A _PCNum=%3 + 42) else (SET _PCNum=%3)
-IF %_PCNum% LSS 10 (SET /A _PCNum=%_PCNum% + 10 - 10)
-
-echo.
-echo PC Name = %computername%
-echo Location = %_RM%
-echo user = tu0100241pc%_PCNum%
-echo password = I don't know this
-SET SteamUser=tu0100241pc%_PCNum%
+for /F "tokens=2 delims==" %%i in ('find "%computername%" accounts.txt') do @set SteamUser=%%i
 SET SteamPW=3854389823
+echo Your steam username and passowrd are %SteamUser% %SteamPW%
 start "%STEAM%\steam.exe" -login %SteamUser% %SteamPW% 
 
 
