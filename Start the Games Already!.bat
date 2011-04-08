@@ -89,24 +89,32 @@ rem which should restore the gcf files.
 
 echo #############################################################################
 echo ####                                                                     ####
-echo ####  In order to start playing, please get your appropriate steam       ####
-echo ####  account information from one of the organizers in the front of     ####
-echo ####  the lab.  Look at the iMac computer number on your computer when   ####
-echo ####  you come up, so we can give you the correct account information.   ####
+echo ####  To login to a Steam account again, click the "Steam Login"    ####
+echo ####  file on your desktop.                                    ####
 echo ####                                                                     ####
 echo ####  In your C:\LanParty\ Folder you will have a list of all the games  ####
 echo ####  that have been provided and shared.  Feel free to install your     ####
 echo ####  own as well.  In order to use the Steam Backup feature, you need   ####
-echo ####  to be LOGGED in to a steam account :-)                             ####
+echo ####  to be LOGGED in to a steam account                          ####
 echo ####                                                                     ####
 echo #############################################################################
 
-REM Auto logon to Steam where username is assigned based on room/computer number
-for /F "tokens=2 delims==" %%i in ('find "%computername%" accounts.txt') do @set SteamUser=%%i
-SET SteamPW=3854389823
-echo Your steam username and passowrd are %SteamUser% %SteamPW%
-start "%STEAM%\steam.exe" -login %SteamUser% %SteamPW% 
+rem #### LAN party auto-login script, 
+FOR /F "delims=- tokens=1,2,3" %%g IN ("%computername%") DO (CALL :PARSE2 %%g %%h %%i)
+:PARSE2
+set _RM=%2
+SET _RM=%_RM:~1,3%
 
+REM Detect if it's in room 440 and if so give it a 42-72 username. 
+IF %_RM% EQU 430 (SET _PCNum=%3) else (SET /A _PCNum=%3 + 42)
+IF %_PCNum% LSS 10 (SET /A _PCNum=%_PCNum% + 10 - 10)
+
+
+REM #### The password will change for each LAN as well as username format
+SET SteamUser=tu0100244pc%_PCNum%
+SET SteamPW=2756474
+
+copy /Y "%LANPARTY_FILES%\Steam Logon.cmd" "%USERPROFILE\Desktop\"
 
 rem #### Open up the folder that will contain all the torrents when downloaded....
 
