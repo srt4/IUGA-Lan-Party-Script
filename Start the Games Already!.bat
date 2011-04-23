@@ -66,5 +66,4 @@ echo Copying over the Torrent files...
 xcopy /E /Y "%LANPARTY_TORRENTS%" "%LANPARTY_INSTALL%"
 @echo off
 
-explorer "%LANPARTY%"
 pause
