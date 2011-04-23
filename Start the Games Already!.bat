@@ -1,7 +1,3 @@
-                                                                     
-                                                                     
-                                                                     
-                                             
 @echo off
 echo #############################################################################
 echo ####                                                                     ####
@@ -24,7 +20,7 @@ net use N: \\is-dfs.ischool.uw.edu\files
 
 rem #### Configuration section
 
-set LANPARTY= C:\LanParty
+set LANPARTY=%USERPROFILE%\Desktop\Games
 set LANPARTY_INSTALL=%LANPARTY%\programs
 set LANPARTY_FILES=N:\Temporary Folders\LanParty
 set LANPARTY_TORRENTS=%LANPARTY_FILES%\torrent_files_to_load
