@@ -28,7 +28,7 @@ set LANPARTY=%USERPROFILE%\Desktop\Games
 set LANPARTY_INSTALL=%LANPARTY%\programs
 set LANPARTY_FILES=N:\Temporary Folders\LanParty
 set LANPARTY_TORRENTS=%LANPARTY_FILES%\torrent_files_to_load
-set TORRENT_WATCH_FOLDER=%LANPARTY%\torrent_files
+set TORRENT_WATCH_FOLDER=C:\LanParty\torrent_files
 set ZIPPY=C:\Program Files\7-Zip\7z.exe
 
 
@@ -38,6 +38,7 @@ rem #### create the installation directories (make sure we are on the C drive fi
 C:
 mkdir "%LANPARTY%"
 mkdir "%LANPARTY_INSTALL%"
+mkdir C:\LanParty
 mkdir "%TORRENT_WATCH_FOLDER%"
 
 
@@ -71,5 +72,3 @@ xcopy /E /Y "%LANPARTY_TORRENTS%" "%LANPARTY_INSTALL%"
 
 explorer "%LANPARTY%"
 pause
-
-
